@@ -81,6 +81,14 @@
 
 
         select.addEventListener('change', updateSrc(player, this.value));
+
+        fetch('https://stream.radiochat.com.br/status-json.xsl')
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(json) {
+            console.log(json);
+          });
     </script>
   </body>
 </html>
