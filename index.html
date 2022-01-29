@@ -45,6 +45,8 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.plyr.io/3.6.12/plyr.polyfilled.js"></script>
     <script>
+        let src = 'main';
+
         const player = new Plyr('#player', {
             title: 'Rádio Chat',
         });
@@ -68,7 +70,7 @@
 
         player.on('pause', (event) => {
           //const instance = event.detail.plyr;
-          updateSrc(this, 'main')
+          updateSrc(this, src)
         });
 
     </script>
