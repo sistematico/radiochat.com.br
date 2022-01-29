@@ -58,7 +58,7 @@
             title: 'Rádio Chat',
         });
 
-        function updateSrc(asrc) {
+        function updateSrc(audiosrc) {
           let ts = Math.floor(+new Date() / 1000); 
 
           player.source = {
@@ -66,13 +66,13 @@
             title: 'Rádio Chat',
             sources: [
               {
-                src: 'https://stream.radiochat.com.br/' + asrc + '?nc=' + ts,
+                src: 'https://stream.radiochat.com.br/' + audiosrc + '?nc=' + ts,
                 type: 'audio/ogg',
               } 
             ]
           };
 
-          console.log(asrc, ts)
+          console.log(audiosrc, ts)
         }
 
         updateSrc(audiosrc)
@@ -90,8 +90,13 @@
           .then(function(response) {
             return response.json();
           })
-          .then(function(json) {
-            console.log(json.icestats);
+          .then(function(streams) {
+            return streams.icestats.source;
+          })
+          .then(function(data) {
+            let streamAtual = data.filter(data => data.genre == 'Eletronica');
+
+            console.log(data, streamAtual);
           });
     </script>
   </body>
