@@ -30,13 +30,13 @@
       </header>
 
       <main class="px-3">
-        <h1>Rádio Chat</h1>
-        <p>
+        <h1 id="title">Rádio Chat</h1>
+        <!-- <p>
           <select id="estilo">
             <option value="main">Principal</option>
             <option value="eletronica">Eletrônica</option>
           </select>
-        </p>
+        </p> -->
         <p class="lead">
             <audio id="player" controls>
                 <source src="https://stream.radiochat.com.br/main" type="audio/ogg" />
@@ -52,7 +52,8 @@
     <script src="https://cdn.plyr.io/3.6.12/plyr.polyfilled.js"></script>
     <script>
         let audiosrc = 'main';
-        let select = document.getElementById('estilo');
+        const select = document.getElementById('estilo');
+        const title = document.getElementById('title');
 
         const player = new Plyr('#player', {
             title: 'Rádio Chat',
@@ -71,8 +72,6 @@
               } 
             ]
           };
-
-          //console.log(audiosrc, ts)
         }
 
         updateSrc(audiosrc)
@@ -82,22 +81,24 @@
         });
 
 
-        select.addEventListener('change', () => {          
-          updateSrc(this.value);          
-        });
+        select.addEventListener('change', updateSrc(select.value))
 
-        fetch('https://stream.radiochat.com.br/status-json.xsl')
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(streams) {
-            return streams.icestats.source;
-          })
-          .then(function(data) {
-            let streamAtual = data.filter(data => data.genre == 'Eletronica');
+        setInterval(function () {       
 
-            console.log(data, streamAtual);
-          });
+          fetch('https://stream.radiochat.com.br/status-json.xsl')
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(streams) {
+              return streams.icestats.source;
+            })
+            .then(function(data) {
+              let streamAtual = data.filter(data => data.genre == 'Eletronica');
+              title.innerHTML = streamAtual[0].artist + ' - ' + streamAtual[0].title
+              //console.log(data, streamAtual[0]);
+            });
+
+        }, 3000);
     </script>
   </body>
 </html>
