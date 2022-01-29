@@ -45,22 +45,29 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.plyr.io/3.6.12/plyr.polyfilled.js"></script>
     <script>
-        let ts = Math.floor(+new Date() / 1000);
-
         const player = new Plyr('#player', {
             title: 'Rádio Chat',
         });
 
-        player.source = {
-          type: 'audio',
-          title: 'Rádio Chat',
-          sources: [
-            {
-              src: 'https://stream.radiochat.com.br/main?nc=' + ts,
-              type: 'audio/ogg',
-            } 
-          ]
-        };
+        function updateSrc(inst, src) {
+          let ts = Math.floor(+new Date() / 1000); 
+
+          inst.source = {
+            type: 'audio',
+            title: 'Rádio Chat',
+            sources: [
+              {
+                src: 'https://stream.radiochat.com.br/' + src + '?nc=' + ts,
+                type: 'audio/ogg',
+              } 
+            ]
+          };
+        }
+
+        player.on('pause', (event) => {
+          //const instance = event.detail.plyr;
+          updateSrc(this, main)
+        });
 
     </script>
   </body>
