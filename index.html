@@ -51,14 +51,14 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.plyr.io/3.6.12/plyr.polyfilled.js"></script>
     <script>
-        let src = 'main';
+        let audiosrc = 'main';
         let select = document.getElementById('estilo');
 
         const player = new Plyr('#player', {
             title: 'Rádio Chat',
         });
 
-        function updateSrc(src) {
+        function updateSrc(asrc) {
           let ts = Math.floor(+new Date() / 1000); 
 
           player.source = {
@@ -66,21 +66,25 @@
             title: 'Rádio Chat',
             sources: [
               {
-                src: 'https://stream.radiochat.com.br/' + src + '?nc=' + ts,
+                src: 'https://stream.radiochat.com.br/' + asrc + '?nc=' + ts,
                 type: 'audio/ogg',
               } 
             ]
           };
 
-          console.log(src, ts)
+          console.log(asrc, ts)
         }
+
+        updateSrc(audiosrc)
 
         player.on('pause', (event) => {
           updateSrc(src)
         });
 
 
-        select.addEventListener('change', updateSrc(player, this.value));
+        select.addEventListener('change', () => {          
+          updateSrc(this.value);          
+        });
 
         fetch('https://stream.radiochat.com.br/status-json.xsl')
           .then(function(response) {
