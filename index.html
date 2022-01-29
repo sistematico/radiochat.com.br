@@ -33,17 +33,20 @@
       </header>
 
       <main class="px-3">
-        <h1 id="title">Rádio Chat</h1>
-        <!-- <p>
-          <select id="estilo">
-            <option value="main">Principal</option>
-            <option value="eletronica">Eletrônica</option>
-          </select>
-        </p> -->
+        <h4 id="title">Rádio Chat</h4>
         <p class="lead">
-            <audio id="player" controls>
-                <source src="https://stream.radiochat.com.br/main" type="audio/ogg" />
-            </audio>
+          <div class="row d-flex align-items-center">          
+            <div class="col-6 d-flex justify-content-end">
+              <audio id="player" controls>
+                  <source src="https://stream.radiochat.com.br/main" type="audio/ogg" />
+              </audio>
+            </div>
+            <div class="col-6">
+              <select id="estilo" class="form-select" aria-label="Selecione o estilo" style="max-width: 150px;">
+                <option value="eletronica" selected>Eletrônica</option>
+              </select>
+            </div>
+          </div>
         </p>
       </main>
 
@@ -54,11 +57,9 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.plyr.io/3.6.12/plyr.polyfilled.js"></script>
     <script>
-        let audiosrc = 'main';
+        let audiosrc = 'eletronica';
         const select = document.getElementById('estilo');
         const title = document.getElementById('title');
-
-        //controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen']
 
         const player = new Plyr('#player', {
             title: 'Rádio Chat',
@@ -86,11 +87,9 @@
           updateSrc(audiosrc)
         });
 
-
         select.addEventListener('change', updateSrc(select.value))
 
-        setInterval(function () {       
-
+        setInterval(function () {
           fetch('https://stream.radiochat.com.br/status-json.xsl')
             .then(function(response) {
               return response.json();
@@ -99,12 +98,10 @@
               return streams.icestats.source;
             })
             .then(function(data) {
-              let streamAtual = data.filter(data => data.genre == 'Eletronica');
+              let streamAtual = data.filter(data => data.genre.toLowerCase() == select.value);
               title.innerHTML = streamAtual[0].artist + ' - ' + streamAtual[0].title
-              //console.log(data, streamAtual[0]);
-            });
-
-        }, 3000);
+            })
+        }, 3000)
     </script>
   </body>
 </html>
