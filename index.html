@@ -31,6 +31,12 @@
 
       <main class="px-3">
         <h1>Rádio Chat</h1>
+        <p>
+          <select id="estilo">
+            <option value="main">Principal</option>
+            <option value="eletronica">Eletrônica</option>
+          </select>
+        </p>
         <p class="lead">
             <audio id="player" controls>
                 <source src="https://stream.radiochat.com.br/main" type="audio/ogg" />
@@ -46,15 +52,16 @@
     <script src="https://cdn.plyr.io/3.6.12/plyr.polyfilled.js"></script>
     <script>
         let src = 'main';
+        let select = document.getElementById('estilo');
 
         const player = new Plyr('#player', {
             title: 'Rádio Chat',
         });
 
-        function updateSrc(inst, src) {
+        function updateSrc(src) {
           let ts = Math.floor(+new Date() / 1000); 
 
-          inst.source = {
+          player.source = {
             type: 'audio',
             title: 'Rádio Chat',
             sources: [
@@ -65,14 +72,15 @@
             ]
           };
 
-          console.log(inst, src, ts)
+          console.log(src, ts)
         }
 
         player.on('pause', (event) => {
-          //const instance = event.detail.plyr;
-          updateSrc(this, src)
+          updateSrc(src)
         });
 
+
+        select.addEventListener('change', updateSrc(player, this.value));
     </script>
   </body>
 </html>
