@@ -99,10 +99,9 @@
               return streams.icestats.source;
             })
             .then(function(data) {
-              console.log(data)
+              //console.log(data)
               //let streamAtual = data.filter(data => data.genre.toLowerCase() == select.value);
               //title.innerHTML = streamAtual[0].artist + ' - ' + streamAtual[0].title
-              //title.innerHTML = data.artist + ' - ' + data.title
               title.innerHTML = data.title
               ouvintes.innerHTML = data.listeners
             })
