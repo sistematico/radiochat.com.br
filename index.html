@@ -36,16 +36,16 @@
         <h4 id="title">Rádio Chat</h4>
         <p class="lead">
           <div class="row d-flex align-items-center">          
-            <div class="col-6 d-flex justify-content-end">
+            <div class="col-12 d-flex justify-content-center">
               <audio id="player" controls>
-                  <source src="https://stream.radiochat.com.br/main" type="audio/ogg" />
+                  <source src="https://stream.radiochat.com.br:8443/principal" type="audio/ogg" />
               </audio>
             </div>
-            <div class="col-6">
+            <!-- <div class="col-6">
               <select id="estilo" class="form-select" aria-label="Selecione o estilo" style="max-width: 150px;">
                 <option value="eletronica" selected>Eletrônica</option>
               </select>
-            </div>
+            </div> -->
           </div>
         </p>
       </main>
@@ -57,7 +57,7 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.plyr.io/3.6.12/plyr.polyfilled.js"></script>
     <script>
-        let audiosrc = 'eletronica';
+        let audiosrc = 'principal';
         const select = document.getElementById('estilo');
         const title = document.getElementById('title');
 
@@ -74,7 +74,7 @@
             title: 'Rádio Chat',
             sources: [
               {
-                src: 'https://stream.radiochat.com.br/' + audiosrc + '?nc=' + ts,
+                src: 'https://stream.radiochat.com.br:8443/' + audiosrc + '?nc=' + ts,
                 type: 'audio/ogg',
               } 
             ]
@@ -90,7 +90,7 @@
         select.addEventListener('change', updateSrc(select.value))
 
         setInterval(function () {
-          fetch('https://stream.radiochat.com.br/status-json.xsl')
+          fetch('https://stream.radiochat.com.br:8443/json')
             .then(function(response) {
               return response.json();
             })
