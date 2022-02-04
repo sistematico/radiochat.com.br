@@ -51,7 +51,7 @@
       </main>
 
       <footer class="mt-auto text-white-50">
-        <p>Rádio Chat</p>
+        <p>&copy; 2022 Rádio Chat - Ouvintes: <span id="ouvintes">n/a</span></p>
       </footer>
     </div>
     <script src="js/bootstrap.bundle.min.js"></script>
@@ -60,6 +60,7 @@
         let audiosrc = 'principal';
         //const select = document.getElementById('estilo');
         const title = document.getElementById('title');
+        const ouvintes = document.getElementById('ouvintes');
 
         const player = new Plyr('#player', {
             title: 'Rádio Chat',
@@ -98,11 +99,12 @@
               return streams.icestats.source;
             })
             .then(function(data) {
-              //console.log(data)
+              console.log(data)
               //let streamAtual = data.filter(data => data.genre.toLowerCase() == select.value);
               //title.innerHTML = streamAtual[0].artist + ' - ' + streamAtual[0].title
               //title.innerHTML = data.artist + ' - ' + data.title
               title.innerHTML = data.title
+              ouvintes.innerHTML = data.listeners
             })
         }, 3000)
     </script>
