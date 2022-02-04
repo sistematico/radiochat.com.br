@@ -98,8 +98,9 @@
               return streams.icestats.source;
             })
             .then(function(data) {
-              let streamAtual = data.filter(data => data.genre.toLowerCase() == select.value);
-              title.innerHTML = streamAtual[0].artist + ' - ' + streamAtual[0].title
+              //let streamAtual = data.filter(data => data.genre.toLowerCase() == select.value);
+              //title.innerHTML = streamAtual[0].artist + ' - ' + streamAtual[0].title
+              title.innerHTML = data[0].artist + ' - ' + data[0].title
             })
         }, 3000)
     </script>
